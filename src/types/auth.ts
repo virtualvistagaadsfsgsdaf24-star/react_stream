@@ -4,6 +4,23 @@ export type UserAccessEntry = {
   groupAuthorizeCode: number;
 };
 
+export type UserAccount = {
+  userID: string;
+  userName: string;
+  employeeNo: string;
+  fullname: string;
+  email: string;
+  companyCode: string;
+  companyName: string;
+  token: string;
+  defaultCompany: boolean;
+  photo: string;
+  officeLocation: string | null;
+  userType: string;
+  groupAccessID: string;
+  userAccess?: UserAccessEntry[];
+};
+
 export type LoginApiResponse = {
   status: "true" | "false";
   message: string;
