@@ -1,0 +1,72 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+      },
+      
+      fontSize: {
+        'display-xl': ['60px', { lineHeight: 'normal', letterSpacing: '-1.34px' }],
+        'display-lg': ['48px', { lineHeight: 'normal', letterSpacing: '-1.07px' }],
+        'display-md': ['36px', { lineHeight: 'normal', letterSpacing: '-0.79px' }],
+        'display-sm': ['28px', { lineHeight: 'normal', letterSpacing: '-0.59px' }],
+        'display-xs': ['24px', { lineHeight: 'normal', letterSpacing: '-0.47px' }],
+        'xl': ['20px', { lineHeight: 'normal', letterSpacing: '-0.47px' }],
+        'lg': ['18px', { lineHeight: 'normal', letterSpacing: '-0.26px' }],
+        '2lg': ['18px', { lineHeight: '1.5', letterSpacing: '-0.26px' }],
+        'md': ['16px', { lineHeight: 'normal', letterSpacing: '-0.18px' }],
+        'md-150': ['16px', { lineHeight: '1.5', letterSpacing: '-0.18px' }],
+        'sm': ['14px', { lineHeight: 'normal', letterSpacing: '-0.09px' }],
+        'sm-150': ['14px', { lineHeight: '1.5', letterSpacing: '-0.09px' }],
+        '2sm': ['13px', { lineHeight: 'normal', letterSpacing: '-0.09px' }],
+        '2sm-150': ['13px', { lineHeight: '1.5', letterSpacing: '-0.09px' }],
+        'xs': ['12px', { lineHeight: 'normal', letterSpacing: '0.01px' }],
+        'xs-150': ['12px', { lineHeight: '1.5', letterSpacing: '0.01px' }],
+        '2xs': ['11px', { lineHeight: 'normal', letterSpacing: '0.05px' }],
+        '3xs': ['10px', { lineHeight: 'normal', letterSpacing: '0.1px' }],
+      },
+      
+      colors: {
+        white: '#FFFFFF',
+        black: '#1A1A1A',
+        'bg-blue': '#F9FAFB',
+        primary: {
+          50: '#F5F9FF', 100: '#E8F2FA', 200: '#D1E4F6', 300: '#A3CAEC',
+          400: '#76AFE3', 500: '#4895D9', 600: '#1A7AD0', 700: '#1562A6',
+          800: '#10497D', 900: '#0A3153', 950: '#05182A',
+        },
+        error: {
+          50: '#FFF5F5', 100: '#FFEBEC', 200: '#FFD6D9', 300: '#FFAEB3',
+          400: '#FE858C', 500: '#FE5D66', 600: '#FE3440', 700: '#CB2A33',
+          800: '#981F26', 900: '#66151A', 950: '#330A0D',
+        },
+        success: {
+          50: '#F7FDF9', 100: '#EBFAF1', 200: '#D7F4E3', 300: '#AFE9C7',
+          400: '#86DFAB', 500: '#5ED48F', 600: '#36C973', 700: '#2BA15C',
+          800: '#207945', 900: '#16502E', 950: '#0B2617',
+        },
+        warning: {
+          50: '#FFFCF5', 100: '#FFF9EB', 200: '#FFF4D6', 300: '#FFE8AE',
+          400: '#FEDD85', 500: '#FED15D', 600: '#FEC634', 700: '#CB9E2A',
+          800: '#98771F', 900: '#664F15', 950: '#33280A',
+        },
+        neutral: {
+          50: '#FAFAFA', 100: '#F5F5F5', 200: '#E5E5E5', 300: '#D4D4D4',
+          400: '#A3A3A3', 500: '#8F8F8F', 600: '#737373', 700: '#525252',
+          800: '#424242', 900: '#333333', 950: '#282828',
+        },
+        other: {
+          'light-blue': '#E9F8FC', 'light-purple': '#EBEBFA',
+          'light-green': '#EFFAEB', 'light-pink': '#FFE5EA',
+          blue: '#45C5E2', purple: '#8685DE', green: '#9ADE7B', pink: '#FF8094',
+        }
+      }
+    },
+  },
+  plugins: [],
+}
