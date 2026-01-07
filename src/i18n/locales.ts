@@ -4,13 +4,15 @@ export const resources = {
   en: {
     translation: {
       org_code_title: "Enter Organization Code",
-      org_code_subtitle: "Enter your organization code to access your Stream account.",
+      org_code_subtitle:
+        "Enter your organization code to access your Stream account.",
       org_code_label: "Enter Organization Code",
       org_code_placeholder: "Enter your organization code...",
       how_to_find_code: "How to find Organization Code?",
       next: "Next",
       login_title: "Login",
-      login_subtitle: "Enter your username and password to access your Stream account.",
+      login_subtitle:
+        "Enter your username and password to access your Stream account.",
       username_label: "Username",
       username_placeholder: "Enter your username...",
       password_label: "Password",
@@ -28,10 +30,13 @@ export const resources = {
       back: "Back",
       close: "Close",
       error_org_not_found: "Organization not found. Please check your code.",
-      error_network: "Failed to connect to server. Please check your internet connection.",
+      error_network:
+        "Failed to connect to server. Please check your internet connection.",
       error_unknown: "An unknown error occurred. Please try again.",
       error_server_config: "Server misconfiguration detected.",
-      
+      error_login_failed: "Login failed. Please check your credentials.",
+      error_switch_company: "Failed to switch company.",
+
       dashboard_title: "Personnel Data",
       dashboard_subtitle: "Welcome to your employee self-service dashboard.",
       dashboard_placeholder: "Dashboard content goes here",
@@ -42,6 +47,14 @@ export const resources = {
       logout: "Sign Out",
       choose_company: "Choose Company",
 
+      select_option: "Select option",
+      search_placeholder: "Search...",
+      no_results_found: "No results found",
+      code: "Code",
+      name: "Name",
+      lang_en: "English (US)",
+      lang_id: "Bahasa Indonesia",
+
       menu_HOME: "Home",
       menu_PE: "Personnel",
       menu_TM: "Time Management",
@@ -51,19 +64,24 @@ export const resources = {
       menu_RPT: "Export Reports",
       menu_TRX: "Transactions",
       menu_MOB: "Mobile Master Data",
-      menu_RC: "Recruitment"
+      menu_RC: "Recruitment",
+
+      cancel: "Cancel",
+      save: "Save",
     },
   },
   id: {
     translation: {
       org_code_title: "Masukkan Kode Organisasi",
-      org_code_subtitle: "Masukkan kode organisasi Anda untuk mengakses akun Stream.",
+      org_code_subtitle:
+        "Masukkan kode organisasi Anda untuk mengakses akun Stream.",
       org_code_label: "Masukkan Kode Organisasi",
       org_code_placeholder: "Masukkan kode organisasi...",
       how_to_find_code: "Bagaimana cara mencari Kode Organisasi?",
       next: "Lanjut",
       login_title: "Masuk",
-      login_subtitle: "Masukkan username dan kata sandi untuk mengakses akun Stream Anda.",
+      login_subtitle:
+        "Masukkan username dan kata sandi untuk mengakses akun Stream Anda.",
       username_label: "Username",
       username_placeholder: "Masukkan username Anda...",
       password_label: "Kata Sandi",
@@ -80,13 +98,19 @@ export const resources = {
       success_msg: "Data berhasil dikirim",
       back: "Kembali",
       close: "Tutup",
-      error_org_not_found: "Organisasi tidak ditemukan. Mohon periksa kode Anda.",
-      error_network: "Gagal menghubungkan ke server. Mohon periksa koneksi internet Anda.",
-      error_unknown: "Terjadi kesalahan yang tidak diketahui. Silakan coba lagi.",
+      error_org_not_found:
+        "Organisasi tidak ditemukan. Mohon periksa kode Anda.",
+      error_network:
+        "Gagal menghubungkan ke server. Mohon periksa koneksi internet Anda.",
+      error_unknown:
+        "Terjadi kesalahan yang tidak diketahui. Silakan coba lagi.",
       error_server_config: "Terdeteksi kesalahan konfigurasi server.",
+      error_login_failed: "Gagal masuk. Mohon periksa kredensial Anda.",
+      error_switch_company: "Gagal mengganti perusahaan.",
 
       dashboard_title: "Data Personel",
-      dashboard_subtitle: "Selamat datang di dashboard layanan mandiri karyawan Anda.",
+      dashboard_subtitle:
+        "Selamat datang di dashboard layanan mandiri karyawan Anda.",
       dashboard_placeholder: "Konten dashboard akan muncul di sini",
 
       change_language: "Ganti Bahasa",
@@ -94,6 +118,14 @@ export const resources = {
       settings: "Pengaturan",
       logout: "Keluar",
       choose_company: "Pilih Perusahaan",
+
+      select_option: "Pilih opsi",
+      search_placeholder: "Cari...",
+      no_results_found: "Tidak ada hasil ditemukan",
+      code: "Kode",
+      name: "Nama",
+      lang_en: "Inggris (AS)",
+      lang_id: "Bahasa Indonesia",
 
       menu_HOME: "Beranda",
       menu_PE: "Personalia",
@@ -104,7 +136,10 @@ export const resources = {
       menu_RPT: "Ekspor Laporan",
       menu_TRX: "Transaksi",
       menu_MOB: "Master Mobile",
-      menu_RC: "Rekrutmen"
+      menu_RC: "Rekrutmen",
+
+      cancel: "Batal",
+      save: "Simpan",
     },
   },
 };

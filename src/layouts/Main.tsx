@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { cn } from "../utils/cn";
 import { useMainLayout } from "../hooks/layout/useMainLayout";
 import { SearchableOptionDropdown } from "../components/fields/SearchableOptionDropdown";
+import Notification from "../components/overlays/Notification";
+import Language from "../components/overlays/Language";
 import {
   IconMenu,
   IconCaretRight,
@@ -28,6 +30,10 @@ export default function Main({ children }: { children: React.ReactNode }) {
     mobileNavOpen,
     profileOpen,
     profileRef,
+    notification,
+    languageOpen,
+    setLanguageOpen,
+    setNotification,
     toggleSidebar,
     toggleProfile,
     openMobileNav,
@@ -51,6 +57,16 @@ export default function Main({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-neutral-100 md:h-screen md:flex-row md:overflow-hidden font-sans">
+      {notification && (
+        <Notification
+          message={notification.message}
+          variant={notification.variant}
+          onClose={() => setNotification(null)}
+        />
+      )}
+
+      <Language isOpen={languageOpen} onClose={() => setLanguageOpen(false)} />
+
       <aside
         className={cn(
           "hidden flex-col items-center gap-8 bg-primary-600 py-8 text-white transition-all duration-200 md:flex",
@@ -195,6 +211,8 @@ export default function Main({ children }: { children: React.ReactNode }) {
                   {profileMenu.map((item) => {
                     const MenuIcon = item.icon;
                     const isSignOut = item.action === "signout";
+                    const isLanguage = item.action === "language";
+
                     return (
                       <button
                         key={item.label}
@@ -202,6 +220,7 @@ export default function Main({ children }: { children: React.ReactNode }) {
                         onClick={() => {
                           toggleProfile();
                           if (isSignOut) handleSignOut();
+                          if (isLanguage) setLanguageOpen(true);
                         }}
                         className={cn(
                           "flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-2 text-sm transition",

@@ -4,44 +4,35 @@ import { useTranslation } from "react-i18next";
 import { getStorage, removeStorage, setStorage } from "../../utils/storage";
 import { getIconComponent } from "../../utils/iconMap";
 import { buildMenuList } from "../../utils/menuHelper";
+import api from "../../api/axiosInstance";
 import type { AuthSession, UserAccount } from "../../types/auth";
 import type { CompanyInfo } from "../../types/company";
 
 export const useMainLayout = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const profileRef = useRef<HTMLDivElement>(null);
+
+  const [notification, setNotification] = useState<{
+    message: string;
+    variant: "success" | "error" | "info";
+  } | null>(null);
+
+  const [languageOpen, setLanguageOpen] = useState(false);
 
   const [session] = useState<AuthSession | null>(() =>
     getStorage<AuthSession>("auth_session")
   );
 
-  const [authContexts] = useState<UserAccount[]>(() => {
-    const data = getStorage<UserAccount[]>("auth_contexts") || [];
+  const [authContexts, setAuthContexts] = useState<UserAccount[]>(
+    () => getStorage<UserAccount[]>("auth_contexts") || []
+  );
 
-    // --- TAMBAHKAN LOG INI UNTUK CEK DATA ---
-    console.log("DEBUG: Raw Auth Contexts:", data);
-    // ----------------------------------------
-
-    return data;
-  });
-
-  const [companies] = useState<CompanyInfo[]>(() => {
+  const [companies, setCompanies] = useState<CompanyInfo[]>(() => {
     if (authContexts.length > 0) {
-      const unique = authContexts.reduce<UserAccount[]>((acc, current) => {
-        const x = acc.find((item) => item.companyCode === current.companyCode);
-        if (!x) return acc.concat([current]);
-        return acc;
-      }, []);
-
-      return unique.map((c) => ({
-        companyCode: c.companyCode,
-        companyName: c.companyName,
-        apiurl: null,
-      }));
+      return mapContextsToCompanies(authContexts);
     }
-
     const comp = getStorage<CompanyInfo>("company_session");
     return comp ? [comp] : [];
   });
@@ -55,6 +46,60 @@ export const useMainLayout = () => {
   const [sidebarExpanded, setSidebarExpanded] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [companyLoading, setCompanyLoading] = useState(false);
+
+  function mapContextsToCompanies(contexts: UserAccount[]): CompanyInfo[] {
+    const unique = contexts.reduce<UserAccount[]>((acc, current) => {
+      const x = acc.find((item) => item.companyCode === current.companyCode);
+      if (!x) return acc.concat([current]);
+      return acc;
+    }, []);
+
+    return unique.map((c) => ({
+      companyCode: c.companyCode,
+      companyName: c.companyName,
+      apiurl: null,
+    }));
+  }
+
+  useEffect(() => {
+    const successMsg = sessionStorage.getItem("company_switch_success");
+    if (successMsg) {
+      setNotification({ message: successMsg, variant: "success" });
+      sessionStorage.removeItem("company_switch_success");
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      if (!session?.userID || !session?.token) return;
+
+      if (companies.length <= 1) setCompanyLoading(true);
+
+      try {
+        const payload = {
+          userID: session.userID,
+          token: session.token,
+        };
+
+        const response = await api.post("/company/holding-list", payload);
+        const dataList = response.data?.dataListSet;
+
+        if (Array.isArray(dataList) && dataList.length > 0) {
+          setStorage("auth_contexts", dataList);
+          setAuthContexts(dataList);
+
+          const formattedCompanies = mapContextsToCompanies(dataList);
+          setCompanies(formattedCompanies);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setCompanyLoading(false);
+      }
+    };
+
+    fetchCompanies();
+  }, [session?.userID, session?.token, companies.length]);
 
   const handleCompanyChange = (option: { code: string; label: string }) => {
     setCompanyLoading(true);
@@ -72,6 +117,8 @@ export const useMainLayout = () => {
         };
         setStorage("company_session", newCompanyInfo);
 
+        const nextToken = targetContext.token || session?.token || "";
+
         const newAuthSession: AuthSession = {
           userID: targetContext.userID,
           userName: targetContext.userName,
@@ -80,24 +127,32 @@ export const useMainLayout = () => {
           email: targetContext.email,
           companyCode: targetContext.companyCode,
           companyName: targetContext.companyName,
-          token: targetContext.token,
+          token: nextToken,
           defaultCompany: targetContext.defaultCompany,
           photo: targetContext.photo,
           officeLocation: targetContext.officeLocation,
           userType: targetContext.userType,
           groupAccessID: targetContext.groupAccessID,
-
           menuList: buildMenuList(targetContext.userAccess),
         };
 
         setStorage("auth_session", newAuthSession);
-        setStorage("token", targetContext.token);
+        setStorage("token", nextToken);
 
         setSelectedCompanyCode(option.code);
 
+        sessionStorage.setItem(
+          "company_switch_success",
+          `Success switch to ${targetContext.companyName}`
+        );
+
         window.location.reload();
       } catch (error) {
-        console.error("Failed to switch company", error);
+        console.error(error);
+        setNotification({
+          message: "Failed to switch company",
+          variant: "error",
+        });
         setCompanyLoading(false);
       }
     } else {
@@ -200,6 +255,10 @@ export const useMainLayout = () => {
     mobileNavOpen,
     profileOpen,
     profileRef,
+    notification,
+    languageOpen,
+    setLanguageOpen,
+    setNotification,
     toggleSidebar,
     toggleProfile,
     openMobileNav,
@@ -207,5 +266,6 @@ export const useMainLayout = () => {
     handleCompanyChange,
     handleSignOut,
     t,
+    i18n,
   };
 };
